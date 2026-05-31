@@ -1,0 +1,12 @@
+apiVersion: egress.platform.io/v1alpha1
+kind: EgressPolicyProposal
+metadata:
+  labels:
+    app.kubernetes.io/name: egresspolicyproposal
+    app.kubernetes.io/instance: egresspolicyproposal-sample
+    app.kubernetes.io/part-of: egress-guardian-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: egress-guardian-operator
+  name: egresspolicyproposal-sample
+spec:
+  # TODO(user): Add fields here

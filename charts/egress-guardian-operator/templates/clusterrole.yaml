@@ -1,0 +1,46 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "egress-guardian-operator.fullname" . }}-manager
+  labels:
+    {{- include "egress-guardian-operator.labels" . | nindent 4 }}
+rules:
+  - apiGroups: ["egress.platform.io"]
+    resources: ["egressprofiles", "egressprofiles/status", "egressprofiles/finalizers"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["egress.platform.io"]
+    resources: ["egresspolicyproposals", "egresspolicyproposals/status", "egresspolicyproposals/finalizers"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["cilium.io"]
+    resources: ["ciliumnetworkpolicies"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["create", "patch"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets", "statefulsets", "daemonsets"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["coordination.k8s.io"]
+    resources: ["leases"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "egress-guardian-operator.fullname" . }}-manager
+  labels:
+    {{- include "egress-guardian-operator.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "egress-guardian-operator.fullname" . }}-manager
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "egress-guardian-operator.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}

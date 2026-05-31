@@ -1,0 +1,17 @@
+apiVersion: v2
+name: egress-guardian-operator
+description: Kubernetes operator for egress governance using Cilium and Hubble
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+keywords:
+  - cilium
+  - hubble
+  - egress
+  - network-policy
+  - kubernetes-operator
+home: https://github.com/ihsenalaya/egress-guardian-operator
+sources:
+  - https://github.com/ihsenalaya/egress-guardian-operator
+maintainers:
+  - name: ihsenalaya

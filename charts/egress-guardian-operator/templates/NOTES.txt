@@ -1,0 +1,25 @@
+egress-guardian-operator has been deployed!
+
+Flow source: {{ .Values.flowSource }}
+{{- if eq .Values.flowSource "hubble" }}
+Hubble Relay: {{ .Values.hubble.relayAddress }}
+{{- else }}
+Running in mock mode — no Cilium/Hubble required.
+{{- end }}
+
+To watch EgressProfiles:
+  kubectl get egressprofiles -A
+
+To create your first profile:
+  kubectl apply -f https://raw.githubusercontent.com/ihsenalaya/egress-guardian-operator/main/config/samples/egressprofile_observe.yaml
+
+Observe → Suggest → Enforce workflow:
+  1. Create an EgressProfile with mode: Observe
+  2. Wait for baseline to build (check status.observedDestinationsCount)
+  3. Switch to mode: Suggest — a policy proposal is generated
+  4. Review the generated CiliumNetworkPolicy in the ConfigMap
+  5. Approve: kubectl patch egresspolicyproposal <name> --type=merge -p '{"spec":{"approval":{"approved":true}}}'
+  6. Switch to mode: Enforce — the CNP is applied
+
+WARNING: Enforcing puts the workload under DEFAULT-DENY egress.
+Watch for Events of type DefaultDenyEgress before approving.

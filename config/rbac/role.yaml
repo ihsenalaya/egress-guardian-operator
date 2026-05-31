@@ -1,0 +1,108 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  - statefulsets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cilium.io
+  resources:
+  - ciliumnetworkpolicies
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egresspolicyproposals
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egresspolicyproposals/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egresspolicyproposals/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egressprofiles
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egressprofiles/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egressprofiles/status
+  verbs:
+  - get
+  - patch
+  - update

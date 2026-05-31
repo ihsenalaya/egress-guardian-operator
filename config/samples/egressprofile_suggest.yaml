@@ -1,0 +1,19 @@
+apiVersion: egress.platform.io/v1alpha1
+kind: EgressProfile
+metadata:
+  name: payment-api
+  namespace: payment
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: payment-api
+  mode: Suggest
+  baselineWindow: 24h
+  policy:
+    allowDNS: true
+    allowKubeSystem: true
+    generatedPolicyName: payment-api-egress-allowlist
+  gitOps:
+    enabled: true
+    outputPath: ./generated/policies

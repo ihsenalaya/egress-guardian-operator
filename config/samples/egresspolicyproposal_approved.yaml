@@ -1,0 +1,14 @@
+apiVersion: egress.platform.io/v1alpha1
+kind: EgressPolicyProposal
+metadata:
+  name: payment-api-proposal
+  namespace: payment
+spec:
+  profileRef:
+    name: payment-api
+  generatedPolicy:
+    type: CiliumNetworkPolicy
+    name: payment-api-egress-allowlist
+  approval:
+    approved: true
+    approvedBy: "ops-team"

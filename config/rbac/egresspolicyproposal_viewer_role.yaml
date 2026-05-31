@@ -1,0 +1,27 @@
+# permissions for end users to view egresspolicyproposals.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: egresspolicyproposal-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: egress-guardian-operator
+    app.kubernetes.io/part-of: egress-guardian-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: egresspolicyproposal-viewer-role
+rules:
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egresspolicyproposals
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - egress.platform.io
+  resources:
+  - egresspolicyproposals/status
+  verbs:
+  - get

@@ -1,0 +1,50 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: payment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-api
+  namespace: payment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-api
+  template:
+    metadata:
+      labels:
+        app: payment-api
+    spec:
+      containers:
+        - name: payment-api
+          image: curlimages/curl:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              while true; do
+                curl -s https://api.stripe.com/v1/charges -o /dev/null || true
+                curl -s https://login.microsoftonline.com -o /dev/null || true
+                curl -s https://storage.googleapis.com -o /dev/null || true
+                sleep 30
+              done
+---
+apiVersion: egress.platform.io/v1alpha1
+kind: EgressProfile
+metadata:
+  name: payment-api
+  namespace: payment
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: payment-api
+  mode: Observe
+  baselineWindow: 24h
+  policy:
+    allowDNS: true
+    allowKubeSystem: true
+    generatedPolicyName: payment-api-egress-allowlist

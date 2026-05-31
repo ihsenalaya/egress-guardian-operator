@@ -1,0 +1,12 @@
+apiVersion: egress.platform.io/v1alpha1
+kind: EgressProfile
+metadata:
+  labels:
+    app.kubernetes.io/name: egressprofile
+    app.kubernetes.io/instance: egressprofile-sample
+    app.kubernetes.io/part-of: egress-guardian-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: egress-guardian-operator
+  name: egressprofile-sample
+spec:
+  # TODO(user): Add fields here

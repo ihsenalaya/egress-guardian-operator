@@ -1,0 +1,5 @@
+## Append samples of your project ##
+resources:
+- egress_v1alpha1_egressprofile.yaml
+- egress_v1alpha1_egresspolicyproposal.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples

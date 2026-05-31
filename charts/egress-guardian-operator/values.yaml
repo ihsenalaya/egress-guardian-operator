@@ -1,0 +1,51 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/ihsenalaya/egress-guardian-operator
+  pullPolicy: IfNotPresent
+  tag: ""  # defaults to Chart.appVersion
+
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+# Flow source: "mock" (no Cilium required) or "hubble"
+flowSource: mock
+
+hubble:
+  relayAddress: "hubble-relay.kube-system.svc.cluster.local:80"
+
+operator:
+  snapshotInterval: "30s"
+  leaderElect: true
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+# Namespaces the operator is allowed to watch (empty = all)
+watchNamespaces: []
+
+podAnnotations: {}
+podLabels: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+metrics:
+  enabled: true
+  port: 8080
+
+healthProbe:
+  port: 8081
